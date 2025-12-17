@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spam or Ham Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ERROR MESSAGE -->
+    {% if error %}
+        <div class="result spam">{{ error }}</div>
+    {% endif %}
+
+    <!-- INPUT SECTION -->
+    {% if not result %}
+    <div class="input-section">
+        <h1>Email Classifier</h1>
+        <p>Check whether an email is Spam or Ham using Machine Learning</p>
+
+        <form action="/predict" method="post">
+            <textarea
+                name="message"
+                placeholder="Paste your email text here..."
+                required
+                minlength="5"></textarea>
+
+            <button type="submit">Check Email</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- RESULT SECTION -->
+    {% if result %}
+    <div class="result-section">
+        <h1>Prediction Result</h1>
+
+        {% if 'spam' in result.lower() %}
+            <div class="result spam">{{ result }}</div>
+        {% else %}
+            <div class="result ham">{{ result }}</div>
+        {% endif %}
+
+        <form action="/" method="get">
+            <button class="back-btn" type="submit">Check Another Email</button>
+        </form>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
